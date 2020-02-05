@@ -1,5 +1,5 @@
 # Extended Kalman Filter Project 
-In this project a kalman filter is designed to estimate the state of a moving object of interest with noisy lidar and radar measurements.  
+* In this project a kalman filter is designed to estimate the state of a moving object of interest with noisy lidar and radar measurements.  
 ---
 ## Installation setup
 
