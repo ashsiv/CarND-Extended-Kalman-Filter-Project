@@ -35,7 +35,7 @@ The Kalman Filter performance is evaluated through RMSE (Root Mean Square Error)
 For both datasets 1 and 2, RMSE error for position (x,y) is < 0.11 and RMSE error for velocity is < 0.5.
 
 ### Dataset 1
-![Image1](./output_images/dataset1.PNG)
+![Image1](./output images/dataset1.PNG)
 
 ### Dataset 2
-![Image2](./output_images/dataset2.PNG)
+![Image2](./output images/dataset2.PNG)
