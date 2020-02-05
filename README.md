@@ -1,5 +1,6 @@
 # Extended Kalman Filter Project 
-In this project a kalman filter is designed to estimate the state of a moving object of interest with noisy lidar and radar measurements.  ---
+In this project a kalman filter is designed to estimate the state of a moving object of interest with noisy lidar and radar measurements.  
+---
 ## Installation setup
 
 Install [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) for either Linux or Mac systems. For windows you can use [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) to install uWebSocketIO. 
@@ -25,7 +26,7 @@ Once the install for uWebSocketIO is complete, the main program can be built and
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make` 
    * On windows, you may need to run: `cmake .. -G "Unix Makefiles" && make`
-4. Run it: `./ExtendedKF 
+4. Run it: `./ExtendedKF`
 ---
 ## Results: Kalman Filter performance
 
