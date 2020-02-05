@@ -1,11 +1,15 @@
 # Extended Kalman Filter Project 
-In this project a kalman filter is designed to estimate the state of a moving object of interest with noisy lidar and radar measurements.  
+* In this project a kalman filter is designed to estimate the state of a moving object of interest with noisy lidar and radar measurements. 
+
+* The following algorithm is implemented in C++. Refer to [FusionEKF.cpp](https://github.com/ashsiv/CarND-Extended-Kalman-Filter-Project/blob/master/src/FusionEKF.cpp)
+![Image3](./output_images/Algorithm.PNG)
+
+* Kalman Filter equations - implemented in [kalman_filter.cpp](https://github.com/ashsiv/CarND-Extended-Kalman-Filter-Project/blob/master/src/kalman_filter.cpp). 
+![Image3](./output_images/equations.jpg)
 ---
 ## Installation setup
 
-Install [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) for either Linux or Mac systems. For windows you can use [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) to install uWebSocketIO. 
-
-Once the install for uWebSocketIO is complete, the main program can be built and run from the project top directory (see basic build instructions).
+* Install [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) for either Linux or Mac systems. For windows you can use [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) to install uWebSocketIO. Once the install for uWebSocketIO is complete, the main program can be built and run from the project top directory (see basic build instructions).
 ---
 ## Other Important Dependencies
 
