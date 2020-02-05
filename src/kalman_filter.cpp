@@ -1,8 +1,8 @@
 #include "kalman_filter.h"
-
+#include <iostream>
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
-
+using namespace std;
 /* 
  * Please note that the Eigen library does not initialize 
  *   VectorXd or MatrixXd objects with zeros upon creation.
@@ -29,7 +29,7 @@ void KalmanFilter::Predict() {
   x_ = F_ * x_;
   MatrixXd Ft = F_.transpose();
   P_ = F_ * P_ * Ft + Q_;
-
+ 
 }
 
 void KalmanFilter::Update(const VectorXd &z) {
@@ -49,19 +49,40 @@ void KalmanFilter::Update(const VectorXd &z) {
   long x_size = x_.size();
   MatrixXd I = MatrixXd::Identity(x_size, x_size);
   P_ = (I - K * H_) * P_;
+  
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
   /**
    * TODO: update the state by using Extended Kalman Filter equations
    */
-  VectorXd z_pred(3);
-  z_pred(0) = ( (x_[0]*x_[0]) + (x_[1]*x_[1]) ).sqrt();
-  z_pred(1) = (x_[1]/x_[0]).atan2();
+ 
+ VectorXd z_pred(3);
+  
+  z_pred(0) = sqrt(( (x_[0]*x_[0]) + (x_[1]*x_[1]) ));
+  if(z_pred(0) < 0.0001)
+  {
+		z_pred(0) = 0.0001;
+	}
+  z_pred(1) = atan2(x_[1],x_[0]);
   z_pred(2) = ( (x_[0]*x_[2]) + (x_[1]*x_[3]) )/z_pred(0);
+ 
+  //Make sure phi is between -pi and pi
+  float phi =z[1];
+  if(phi>3.134 && abs( (phi -(2*3.14)) -z_pred[1]) < 0.1 )
+  {
+    phi =  phi -(2*3.14);
+  }
+  else if (phi<-3.134 && abs( (phi +(2*3.14)) -z_pred[1]) < 0.1)
+  {
+    phi = phi +(2*3.14);
+  }
+ 
+ 
   VectorXd y = z - z_pred;
-  MatrixXd Ht = H_.transpose();
-  MatrixXd S = H_ * P_ * Ht + R_;
+  y[1] = phi - z_pred[1];
+  MatrixXd Ht =H_.transpose();
+  MatrixXd S = H_ * P_ * Ht +R_;
   MatrixXd Si = S.inverse();
   MatrixXd PHt = P_ * Ht;
   MatrixXd K = PHt * Si;
@@ -71,4 +92,5 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   long x_size = x_.size();
   MatrixXd I = MatrixXd::Identity(x_size, x_size);
   P_ = (I - K * H_) * P_;
+ 
 }

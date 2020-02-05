@@ -4,7 +4,8 @@
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
 using std::vector;
-
+using std::cout;
+using std::endl;
 Tools::Tools() {}
 
 Tools::~Tools() {}
@@ -29,10 +30,10 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   
   for (int i=0; i < estimations.size(); ++i) {
     // ... your code here
-    VectorXd diff,diffsq;
+    VectorXd diff;
     diff = estimations[i]-ground_truth[i];
-    diffsq=diff.array()*diff.array();
-    rmse += diffsq ;
+    diff=diff.array()*diff.array();
+    rmse += diff ;
   }
 
   // TODO: calculate the mean
@@ -46,11 +47,16 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 }
 
 MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
-  /**
+ 
+ /*
    * TODO:
    * Calculate a Jacobian here.
    */
+  
+  
   MatrixXd Hj(3,4);
+ 
+  
   // recover state parameters
   float px = x_state(0);
   float py = x_state(1);
@@ -62,33 +68,29 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   // check division by zero
   float vp;
   vp = ((px*px) + (py*py));
-  if(vp==0)
-  {
-      cout<<"Divide by zero error";
-      MatrixXd f(3,4);
-                     f<< 0,0,0,0,
-                        0,0,0,0,
-                        0,0,0,0;
-      return f;
-  }
   
-  
+ if(vp ==0){
+		cout << "ERROR - CalculateJacobian () - Division by Zero" << endl;
+		return Hj;
+	}
+
   // compute the Jacobian matrix
-  
-  Hj(0,0) = px/sqrt(vp);
-  Hj(0,1) = py/sqrt(vp);
+  float c1 = sqrt(vp); 
+  Hj(0,0) = px/c1;
+  Hj(0,1) = py/c1;
   Hj(0,2) = 0;
   Hj(0,3) = 0;
   
   Hj(1,0)=-py/(vp);
-  Hj(1,1)=px/(vp);
+  Hj(1,1)= px/(vp);
   Hj(1,2) = 0;
   Hj(1,3) = 0;
   
-  Hj(2,0) = (py*((vx*py) - (vy*px))/pow(vp,3/2));
-  Hj(2,1) = (px*((vy*px) - (vx*py))/pow(vp,3/2));
-  Hj(2,2) =px/sqrt(vp);
-  Hj(2,3) = py/sqrt(vp);
+  Hj(2,0) = py*((vx*py) - (vy*px))/(pow(vp,1.5));
+  Hj(2,1) = px*((vy*px) - (vx*py))/(pow(vp,1.5));
+  Hj(2,2) = px/c1;
+  Hj(2,3) = py/c1;
+  
   
   return Hj;
  
