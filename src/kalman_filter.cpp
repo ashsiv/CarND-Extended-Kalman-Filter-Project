@@ -68,20 +68,8 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   z_pred(1) = atan2(x_[1],x_[0]);
   z_pred(2) = ( (x_[0]*x_[2]) + (x_[1]*x_[3]) )/z_pred(0);
  
-  //Make sure phi is between -pi and pi
-  float phi =z[1];
-  if(phi>3.134 && abs( (phi -(2*3.14)) -z_pred[1]) < 0.1 )
-  {
-    phi =  phi -(2*3.14);
-  }
-  else if (phi<-3.134 && abs( (phi +(2*3.14)) -z_pred[1]) < 0.1)
-  {
-    phi = phi +(2*3.14);
-  }
- 
- 
   VectorXd y = z - z_pred;
-  y[1] = phi - z_pred[1];
+  //Make sure phi is between -pi and pi
   while (y[1]>M_PI)
       {
           y[1] -= 2 * M_PI;
